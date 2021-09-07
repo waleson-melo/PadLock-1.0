@@ -25,7 +25,6 @@ class LoginView:
         self.window = sg.Window("Entrar no sistema", layout=layout, finalize=True)
 
     def start(self):
-        # return self.login_window
          
         while True:
             event, values = self.window.read()
