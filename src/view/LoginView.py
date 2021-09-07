@@ -22,7 +22,18 @@ class LoginView:
             [sg.Frame(title='', layout=frame_image), sg.Col(col1)],
         ]
 
-        self.login_window = sg.Window("Entrar no sistema", layout=layout, finalize=True)
+        self.window = sg.Window("Entrar no sistema", layout=layout, finalize=True)
 
     def start(self):
-        return self.login_window
+        # return self.login_window
+         
+        while True:
+            event, values = self.window.read()
+
+            if event == sg.WINDOW_CLOSED or event == 'Sair':
+                break
+
+            if event == 'Entrar':
+                self.window.close()
+
+        self.window.close()
