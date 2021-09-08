@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-import src.view.DashboardView as dbv
+import src.controller.LoginController as lgc
 
 
 class LoginView:
@@ -10,10 +10,12 @@ class LoginView:
 
         col1 = [
             [sg.Text(text='Nome:')], 
-            [sg.Input(size=(21,1))],
+            [sg.Input(size=(21,1), key='-IN_NOME_USUARIO-')],
             [sg.Text(text='Senha:')],
-            [sg.Input(size=(21,1), password_char='*')],
-            [sg.Button(button_text='Entrar', size=(6,1)), sg.Button(button_text='Sair', size=(6,1))]
+            [sg.Input(size=(21,1), password_char='*',
+                key='-IN_SENHA_USUARIO-')],
+            [sg.Button(button_text='Entrar', size=(6,1)),
+                sg.Button(button_text='Sair', size=(6,1))]
         ]
 
         frame_image = [
@@ -24,7 +26,8 @@ class LoginView:
             [sg.Frame(title='', layout=frame_image), sg.Col(col1)],
         ]
 
-        self.window = sg.Window("Entrar no sistema", layout=layout, finalize=True)
+        self.window = sg.Window("Entrar no sistema", layout=layout,
+                                finalize=True)
 
     def start(self):
          
@@ -35,9 +38,25 @@ class LoginView:
                 break
 
             if event == 'Entrar':
-                self.window.hide()
-                dashboard_window = dbv.DashboardView()
-                dashboard_window.start()
-                self.window.un_hide()
+                nome = values['-IN_NOME_USUARIO-']
+                senha = values['-IN_SENHA_USUARIO-']
+                
+                loginc = lgc.LoginController()
+
+                if nome != '' and senha != '':
+                    if loginc.validar_usuario(login=nome, senha=senha):
+                        self.window.hide()
+
+                        loginc.start_dashboard()
+
+                        self.window.un_hide()
+                        self.window['-IN_NOME_USUARIO-'].update('')
+                        self.window['-IN_NOME_USUARIO-'].set_focus()
+                        self.window['-IN_SENHA_USUARIO-'].update('')
+                    else:
+                        sg.PopupError('Usuario ou senha incorreta.',
+                                    title='Erro')
+                else:
+                    sg.PopupOK('Preenha os campos.', title='Aviso')
 
         self.window.close()
