@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
 
+import src.view.SenhaView as snv
+
 
 class DashboardView:
 
@@ -61,9 +63,14 @@ class DashboardView:
                 self.window['-IN_PESQUISA-'].set_focus()
                 self.window['-COL_USUARIO-'].update(visible=False)
                 self.window['-COL_SENHAS-'].update(visible=True)
+            
+            if event == 'Novo':
+                nova_senha_window = snv.SenhaView('NOVO')
+                self.window.hide()
+                nova_senha_window.start()
+                self.window.un_hide()
                 
-        
-        self.window.close()
+        self.window.close()   
 
 
 if __name__ == '__main__':
