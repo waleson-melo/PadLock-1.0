@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
 
+import src.view.DashboardView as dbv
+
 
 class LoginView:
 
@@ -33,6 +35,9 @@ class LoginView:
                 break
 
             if event == 'Entrar':
-                self.window.close()
+                self.window.hide()
+                dashboard_window = dbv.DashboardView()
+                dashboard_window.start()
+                self.window.un_hide()
 
         self.window.close()
