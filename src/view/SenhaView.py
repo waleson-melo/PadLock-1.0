@@ -45,6 +45,7 @@ class SenhaView:
                 [sg.Text('Observações:', size=size_text), sg.Input('',
                     size=size_input, key='-IN_OBSERVACOES_SENHA-')],
                 [sg.Button('Salvar', size=size_button),
+                    sg.Button('Apagar', size=size_button),
                     sg.Button('Cancelar', size=size_button)]
             ]
         else:
