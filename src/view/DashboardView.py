@@ -1,6 +1,8 @@
+from tkinter.constants import DISABLED
 import PySimpleGUI as sg
 
 import src.view.SenhaView as snv
+import src.controller.UsuarioController as usc
 
 
 class DashboardView:
@@ -57,6 +59,16 @@ class DashboardView:
                 self.window['-IN_NOME_USUARIO-'].set_focus()
                 self.window['-COL_SENHAS-'].update(visible=False)
                 self.window['-COL_USUARIO-'].update(visible=True)
+
+                # Preencher os campos com os dados do usuário
+                usuarioc = usc.UsuarioController()
+                dados = usuarioc.pegar_dados()
+                if dados is not None and values['-IN_CODIGO_USUARIO-'] == '':
+                    self.window['-IN_CODIGO_USUARIO-'].update(str(dados[0]))
+                    self.window['-IN_NOME_USUARIO-'].update(dados[1])
+                    self.window['-IN_SENHA_USUARIO-'].update(dados[2])
+                elif dados is None:
+                    print("erro ao buscar dados do usuario")
             
             if event == 'Senhas':
                 self.window['-TEXT_OPCAO-'].update('Senhas')
@@ -69,6 +81,19 @@ class DashboardView:
                 self.window.hide()
                 nova_senha_window.start()
                 self.window.un_hide()
+        
+            # Verificar se o Checbox esta marcado para editar nos campos do usuario
+            if not values['-CHECKBOX_EDITAR-']:
+                self.window['-IN_NOME_USUARIO-'].update(disabled=True)
+                self.window['-IN_SENHA_USUARIO-'].update(disabled=True)
+                self.window['-IN_REPETIR_SENHA_USUARIO-'].update(
+                    disabled=True)
+            else:
+                # Desativa os campos
+                self.window['-IN_NOME_USUARIO-'].update(disabled=False)
+                self.window['-IN_SENHA_USUARIO-'].update(disabled=False)
+                self.window['-IN_REPETIR_SENHA_USUARIO-'].update(
+                    disabled=False)
                 
         self.window.close()   
 
