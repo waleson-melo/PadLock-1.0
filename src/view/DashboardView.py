@@ -10,7 +10,9 @@ class DashboardView:
         ]
 
         col_senhas = [
-            [sg.Input('', size=(21,1), key='-IN_PESQUISA-'), sg.Button('Atualizar')]
+            [sg.Input('Pesquisar', expand_x=True, key='-IN_PESQUISA-')],
+            [sg.Listbox([], size=(38,6))],
+            [sg.Button('Novo', size=(7,1)), sg.Button('Atualizar', size=(7,1))]
         ]
 
         size_text = (12,1)
