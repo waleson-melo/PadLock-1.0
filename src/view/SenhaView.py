@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from PySimpleGUI.PySimpleGUI import Window
 
 
 class SenhaView:
@@ -41,7 +42,8 @@ class SenhaView:
                 [sg.Text('URL do login:', size=size_text), sg.Input('',
                     size=size_input, key='-IN_URL_SENHA-')],
                 [sg.Text('Data de modificação:', size=size_text), sg.Input('',
-                    size=size_input, key='-IN_DATAMODIFICACAO_SENHA-')],
+                    size=(21,1), disabled=True, key='-IN_DATAMODIFICACAO_SENHA-'),
+                    sg.CalendarButton('Data', target='-IN_DATAMODIFICACAO_SENHA-')],
                 [sg.Text('Observações:', size=size_text), sg.Input('',
                     size=size_input, key='-IN_OBSERVACOES_SENHA-')],
                 [sg.Button('Salvar', size=size_button),
