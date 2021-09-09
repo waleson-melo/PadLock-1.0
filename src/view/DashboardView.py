@@ -1,4 +1,3 @@
-from tkinter.constants import DISABLED
 import PySimpleGUI as sg
 
 import src.view.SenhaView as snv
@@ -45,6 +44,7 @@ class DashboardView:
                                 finalize=True, size=(300,250), margins=(3,3))
 
         self.window['-COL_USUARIO-'].update(visible=False)
+        self.col_selected = 'SENHAS'
 
 
     def start(self):
@@ -55,6 +55,7 @@ class DashboardView:
                 break
 
             if event == 'Usuário':
+                self.col_selected = 'USUARIO'
                 self.window['-TEXT_OPCAO-'].update('Usuário')
                 self.window['-IN_NOME_USUARIO-'].set_focus()
                 self.window['-COL_SENHAS-'].update(visible=False)
@@ -71,6 +72,7 @@ class DashboardView:
                     print("erro ao buscar dados do usuario")
             
             if event == 'Senhas':
+                self.col_selected = 'SENHAS'
                 self.window['-TEXT_OPCAO-'].update('Senhas')
                 self.window['-IN_PESQUISA-'].set_focus()
                 self.window['-COL_USUARIO-'].update(visible=False)
@@ -81,6 +83,12 @@ class DashboardView:
                 self.window.hide()
                 nova_senha_window.start()
                 self.window.un_hide()
+            
+            # Ações que vão ser executadas de acordo com a coluna visivel
+            if self.col_selected == 'SENHAS':
+                pass
+            elif self.col_selected == 'USUARIO':
+                pass
         
             # Verificar se o Checbox esta marcado para editar nos campos do usuario
             if not values['-CHECKBOX_EDITAR-']:
