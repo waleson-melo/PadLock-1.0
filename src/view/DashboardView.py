@@ -99,6 +99,8 @@ class DashboardView:
                             login=login, senha=senha)
                         
                         if ret:
+                            self.window['-CHECKBOX_EDITAR-'].update(
+                                value=False)
                             sg.PopupOK('Usuário alterado.', title='Sucesso')
                         else:
                             sg.PopupError('Erro ao alterar usuário.',
@@ -108,19 +110,27 @@ class DashboardView:
         
             # Verificar se o Checbox esta marcado para editar nos campos do usuario
             if not values['-CHECKBOX_EDITAR-']:
-                self.window['-IN_NOME_USUARIO-'].update(disabled=True)
-                self.window['-IN_SENHA_USUARIO-'].update(disabled=True)
-                self.window['-IN_REPETIR_SENHA_USUARIO-'].update(
-                    disabled=True)
+                # Ativa os campos
+                self.usuario_enabled_elements()
             else:
                 # Desativa os campos
-                self.window['-IN_NOME_USUARIO-'].update(disabled=False)
-                self.window['-IN_SENHA_USUARIO-'].update(disabled=False)
-                self.window['-IN_REPETIR_SENHA_USUARIO-'].update(
-                    disabled=False)
+                self.usuario_disable_elements()
                 
         self.window.close()   
 
+    def usuario_disable_elements(self):
+        self.window['-IN_NOME_USUARIO-'].update(disabled=False)
+        self.window['-IN_SENHA_USUARIO-'].update(disabled=False)
+        self.window['-IN_REPETIR_SENHA_USUARIO-'].update(
+            disabled=False)
+        self.window['Salvar Usuário'].update(disabled=False)
+
+    def usuario_enabled_elements(self):
+        self.window['-IN_NOME_USUARIO-'].update(disabled=True)
+        self.window['-IN_SENHA_USUARIO-'].update(disabled=True)
+        self.window['-IN_REPETIR_SENHA_USUARIO-'].update(
+            disabled=True)
+        self.window['Salvar Usuário'].update(disabled=True)
 
 if __name__ == '__main__':
     dash = DashboardView()
