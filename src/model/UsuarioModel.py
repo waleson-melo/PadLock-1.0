@@ -1,3 +1,4 @@
+import sqlite3
 import src.util.ConnectionDB as conn
 
 
@@ -53,6 +54,22 @@ class UsuarioModel(conn.ConnectionDB):
         self.desconnect_db()
         return dados
 
+    def salvar_usuario(self):
+        try:
+            self.connect_database()
+
+            sql = """
+                UPDATE usuario SET nome = ?, senha = ? WHERE codigo = ?;
+            """
+            dados = self.conn.execute(sql, (self.login, self.senha,
+                self.codigo))
+
+            self.desconnect_db()
+
+            return True
+        except sqlite3.Error as e:
+            print('erro ao alterar usuario. ', e)
+            return False
         
 if __name__ == '__main__':
     usm = UsuarioModel()

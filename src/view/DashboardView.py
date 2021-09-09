@@ -88,7 +88,23 @@ class DashboardView:
             if self.col_selected == 'SENHAS':
                 pass
             elif self.col_selected == 'USUARIO':
-                pass
+                if event == 'Salvar Usuário':
+                    codigo = int(values['-IN_CODIGO_USUARIO-'])
+                    login = values['-IN_NOME_USUARIO-']
+                    senha = values['-IN_SENHA_USUARIO-']
+                    
+                    if login != '' and senha != '':
+                        usuarioc = usc.UsuarioController()
+                        ret = usuarioc.salvar_usuario(codigo=codigo,
+                            login=login, senha=senha)
+                        
+                        if ret:
+                            sg.PopupOK('Usuário alterado.', title='Sucesso')
+                        else:
+                            sg.PopupError('Erro ao alterar usuário.',
+                                title='Erro!')
+                    else:
+                        sg.PopupOK('Preencha os campos.', title='Aviso!')
         
             # Verificar se o Checbox esta marcado para editar nos campos do usuario
             if not values['-CHECKBOX_EDITAR-']:
