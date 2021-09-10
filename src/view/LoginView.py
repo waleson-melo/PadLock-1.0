@@ -14,7 +14,7 @@ class LoginView:
             [sg.Text(text='Senha:')],
             [sg.Input(size=(21,1), password_char='*',
                 key='-IN_SENHA_USUARIO-')],
-            [sg.Button(button_text='Entrar', size=(6,1)),
+            [sg.Button(button_text='Entrar', size=(6,1), bind_return_key=True),
                 sg.Button(button_text='Sair', size=(6,1))]
         ]
 
@@ -55,8 +55,10 @@ class LoginView:
                         self.window['-IN_SENHA_USUARIO-'].update('')
                     else:
                         sg.PopupError('Usuario ou senha incorreta.',
-                                    title='Erro')
+                            title='Erro', auto_close=True,
+                            auto_close_duration=3)
                 else:
-                    sg.PopupOK('Preenha os campos.', title='Aviso')
+                    sg.popup_ok('Preenha os campos.', title='Aviso',
+                        auto_close=True, auto_close_duration=3)
 
         self.window.close()
