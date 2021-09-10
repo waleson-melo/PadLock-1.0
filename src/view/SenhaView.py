@@ -27,8 +27,9 @@ class SenhaView:
                     format='%d/%m/%Y', target='-IN_DATAMODIFICACAO_SENHA-')],
                 [sg.Text('Observações:', size=size_text), sg.Input('',
                     size=(size_input), key='-IN_OBSERVACOES_SENHA-')],
-                [sg.Button('Salvar', size=size_button), sg.Button('Limpar',
-                    size=size_button), sg.Button('Cancelar', size=size_button)]
+                [sg.Button('Salvar', size=size_button, bind_return_key=True),
+                    sg.Button('Limpar', size=size_button),
+                    sg.Button('Cancelar', size=size_button)]
             ]
         elif opcao == 'ALTERAR':
             self.title_window = 'Alterar Senha'
@@ -103,8 +104,8 @@ class SenhaView:
                                 title='Sucesso', auto_close=True,
                                 auto_close_duration=3)
                         else:
-                            sg.popup_error('Erro',
-                                'Erro ao salvar senha.', auto_close=True,
+                            sg.popup_error('Erro ao salvar senha.',
+                                title='Erro', auto_close=True,
                                 auto_close_duration=3)
                     else:
                         sg.popup_ok('Preencha os campos obrigatórios',
